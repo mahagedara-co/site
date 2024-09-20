@@ -1,0 +1,16 @@
+RewriteEngine On
+
+# Redirect trailing slashes to non-trailing slash URLs
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^ %1 [L,R=301]
+
+# Redirect requests to PHP files if they exist
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+
+# Custom 404 error page
+ErrorDocument 404 https://mahagedara.fun/404
+ErrorDocument 500 https://mahagedara.fun/500
