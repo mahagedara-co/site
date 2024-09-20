@@ -1,112 +1,255 @@
-<link rel="icon" href="drive-logo.png">
-<style>
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DrivePlyr - Google Drive Video Player</title>
 
-.plyr  {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /*object-fit: cover;
-  z-index: -1;*/
-}
-</style>
-<title>DrivePlyr - Google Drive Proxy Video Player with Many Powerful HTML5 Players</title>
-    
-<!-- Meta Tags for SEO -->
-<meta name="description" content="DrivePlyr is a Google Drive Proxy Video Player with Many Powerful HTML5 Players, Hidden ID, and Many Features. Play your videos from Google Drive with ease.">
-<meta name="keywords" content="DrivePlyr, Google Drive, Proxy, Video Player, HTML5 Player, Hidden ID, Features">
-<meta name="author" content="SH20RAJ">
+  <link rel="icon" href="drive-logo.png">
+  
+  <!-- Meta Tags for SEO -->
+  <meta name="description" content="DrivePlyr is a Google Drive Proxy Video Player with Many Powerful HTML5 Players, Hidden ID, and Many Features. Play your videos from Google Drive with ease.">
+  <meta name="keywords" content="DrivePlyr, Google Drive, Proxy, Video Player, HTML5 Player, Hidden ID, Features">
+  <meta name="author" content="SH20RAJ">
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://sh20raj.github.io/DrivePlyr/">
-<meta property="og:title" content="DrivePlyr - Google Drive Proxy Video Player with Many Powerful HTML5 Players">
-<meta property="og:description" content="DrivePlyr is a Google Drive Proxy Video Player with Many Powerful HTML5 Players, Hidden ID, and Many Features. Play your videos from Google Drive with ease.">
-<meta property="og:image" content="https://sh20raj.github.io/DrivePlyr/drive-logo.png">
+  <!-- Plyr CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/CDNSFree2/Plyr/plyr.css" />
 
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://sh20raj.github.io/DrivePlyr/">
-<meta property="twitter:title" content="DrivePlyr - Google Drive Proxy Video Player with Many Powerful HTML5 Players">
-<meta property="twitter:description" content="DrivePlyr is a Google Drive Proxy Video Player with Many Powerful HTML5 Players, Hidden ID, and Many Features. Play your videos from Google Drive with ease.">
-<meta property="twitter:image" content="https://sh20raj.github.io/DrivePlyr/drive-logo.png">
+  <!-- Custom Styles -->
+  <style>
+    /* General page styling */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #1e3a8a;
+      font-family: 'Arial', sans-serif;
+      color: white;
+      overflow: hidden;
+      flex-direction: column;
+    }
 
-<!-- Other Meta Tags -->
-<link rel="icon" href="https://raw.githubusercontent.com/SH20RAJ/DrivePlyr/main/drive-logo.png">
-<meta name="theme-color" content="#ffffff">
-<meta name="robots" content="index, follow">
+    /* Header section */
+    header {
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      text-align: center;
+      padding: 15px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #ffffff;
+    }
 
+    /* Container for video */
+    #container {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      margin: auto;
+    }
 
-<!-- Docs styles -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/CDNSFree2/Plyr/plyr.css" />
+    /* Video styling */
+    .plyr {
+      width: 100%;
+      height: auto;
+    }
 
-<!--Add a Simple HTML5 Video tag-->
+    /* Advertisement Section */
+    .advertisement {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    /* Loading animation */
+    .loading-spinner {
+      border: 8px solid rgba(255, 255, 255, 0.3);
+      border-top: 8px solid #ffffff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Hide the loading spinner when the video is loaded */
+    .loading-container {
+      position: relative;
+      width: 100%;
+      display: none;
+    }
+
+    /* Mobile responsiveness */
+    @media only screen and (max-width: 768px) {
+      #container {
+        width: 100%;
+      }
+
+      header {
+        font-size: 18px;
+      }
+    }
+
+    /* Bubble background animation */
+    .bubble-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      background-color: #1e3a8a;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: bubble-animation 15s infinite ease-in;
+      opacity: 0.8;
+    }
+
+    /* Randomized sizes and animation speeds */
+    .bubble:nth-child(2) {
+      width: 60px;
+      height: 60px;
+      left: 20%;
+      animation-duration: 18s;
+    }
+
+    .bubble:nth-child(3) {
+      width: 30px;
+      height: 30px;
+      left: 40%;
+      animation-duration: 12s;
+    }
+
+    .bubble:nth-child(4) {
+      width: 50px;
+      height: 50px;
+      left: 60%;
+      animation-duration: 20s;
+    }
+
+    .bubble:nth-child(5) {
+      width: 70px;
+      height: 70px;
+      left: 80%;
+      animation-duration: 22s;
+    }
+
+    /* Animation for bubbles */
+    @keyframes bubble-animation {
+      0% {
+        transform: translateY(0);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Bubble Background Animation -->
+<div class="bubble-background">
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+</div>
+
+<!-- Header Section -->
+<header>DrivePlyr - Google Drive Video Player</header>
+
+<!-- Advertisement Section -->
+<div class="advertisement">
+  Your Ad Here - Advertisement Section
+</div>
+
+<!-- Loading Spinner -->
+<div class="loading-container" id="loadingContainer">
+  <div class="loading-spinner"></div>
+</div>
+
+<!-- Container for video -->
 <div id="container">
   <video controls poster="https://bit.ly/bbsampleposter" id="vid1">
-    <!-- Video files -->
-    <source src="https://rebrand.ly/sample-video" type="video/mp4" size="576" />
-
+    <!-- Video file source (placeholder) -->
+    <source src="" type="video/mp4" />
   </video>
 </div>
 
+<!-- Plyr JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.6.7/plyr.min.js"></script>
 
 <script>
-  var controls =
-[
-    'play-large', // The large play button in the center
-   // 'restart', // Restart playback
-   // 'rewind', // Rewind by the seek time (default 10 seconds)
-    'play', // Play/pause playback
-    'fast-forward', // Fast forward by the seek time (default 10 seconds)
-    'progress', // The progress bar and scrubber for playback and buffering
-    'current-time', // The current time of playback
-    'duration', // The full duration of the media
-    'mute', // Toggle mute
-    'volume', // Volume control
-    'captions', // Toggle captions
-    'settings', // Settings menu
-    'pip', // Picture-in-picture (currently Safari only)
-    'airplay', // Airplay (currently Safari only)
-    //'download', // Show a download button with a link to either the current source or a custom URL you specify in your options
-    'fullscreen' // Toggle fullscreen
-];
+  var apiKeyList = [
+    'AIzaSyCt3DULzE2trDJhfFUosWZT-3GEObbMqVU', 
+    'AIzaSyCsbx8BSyLwkw6XX6Lg5OF1U0HNtI9VmCY', 
+    'AIzaSyBLMJAT6oqTZxAMsCsMjXzoo4lkJL4MmfM', 
+    'AIzaSyCIY6fomcJxOt0XQ_naa1rzfd5wlOMGKDY'
+  ];
+  
+  var apiKey = apiKeyList[Math.floor(Math.random() * apiKeyList.length)];
 
-  const player = new Plyr('#vid1',{controls});
-</script>
-
-<style>
-  :root {
-  --plyr-color-main: #5776ff;
-    --plyr-video-control-color  :#e8ffba;
-}
-
-</style>
-
-<script>
-  var apikey = ['AIzaSyCt3DULzE2trDJhfFUosWZT-3GEObbMqVU', 'AIzaSyCsbx8BSyLwkw6XX6Lg5OF1U0HNtI9VmCY', 'AIzaSyBLMJAT6oqTZxAMsCsMjXzoo4lkJL4MmfM', 'AIzaSyCIY6fomcJxOt0XQ_naa1rzfd5wlOMGKDY'][Math.floor(Math.random() * 4)];
- console.log(apikey);
-   //apikey = 'AIzaSyD739-eb6NzS_KbVJq1K8ZAxnrMfkIqPyw';
-  function getparam(a,e){return e||(e=window.location.href),new URL(e).searchParams.get(a)}
+  function getParam(param, url = window.location.href) {
+    param = param.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + param + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
 
   let video = document.getElementById('vid1');
-  if(getparam('id')){
-    let json = JSON.parse(atob(getparam('id'))) ;
-    let driveid = json.id;
-    video.src = `https://www.googleapis.com/drive/v3/files/${driveid }?alt=media&key=${apikey}`;
-    video.poster = 'https://lh3.googleusercontent.com/d/'+driveid;
+  let videoId = getParam('id');
+
+  let loadingContainer = document.getElementById('loadingContainer');
+
+  if (videoId) {
+    // Show loading animation
+    loadingContainer.style.display = 'block';
+
+    video.src = `https://www.googleapis.com/drive/v3/files/${videoId}?alt=media&key=${apiKey}`;
+    video.poster = `https://lh3.googleusercontent.com/d/${videoId}`;
+
+    // Hide loading animation once video is ready
+    video.oncanplay = function() {
+      loadingContainer.style.display = 'none';
+    };
+  } else {
+    console.error('No video ID provided in URL.');
   }
+
+  const player = new Plyr('#vid1', {
+    controls: [
+      'play-large', 'play', 'fast-forward', 'progress', 'current-time', 
+      'duration', 'mute', 'volume', 'fullscreen'
+    ]
+  });
 </script>
 
-
-<!-- Go to www.addthis.com/dashboard to customize your tools 
-https://pubgvideox.blogspot.com/
---> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6335ced4a8ebd2f2"></script>
-<img style="display: none;" src="https://iplogger.com/VideoPlyr">
-<script src="tracker.js"></script>
+</body>
+</html>
