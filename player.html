@@ -1,255 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DrivePlyr - Google Drive Video Player</title>
-
-  <link rel="icon" href="drive-logo.png">
-  
-  <!-- Meta Tags for SEO -->
-  <meta name="description" content="DrivePlyr is a Google Drive Proxy Video Player with Many Powerful HTML5 Players, Hidden ID, and Many Features. Play your videos from Google Drive with ease.">
-  <meta name="keywords" content="DrivePlyr, Google Drive, Proxy, Video Player, HTML5 Player, Hidden ID, Features">
-  <meta name="author" content="SH20RAJ">
-
-  <!-- Plyr CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/CDNSFree2/Plyr/plyr.css" />
-
-  <!-- Custom Styles -->
-  <style>
-    /* General page styling */
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #1e3a8a;
-      font-family: 'Arial', sans-serif;
-      color: white;
-      overflow: hidden;
-      flex-direction: column;
-    }
-
-    /* Header section */
-    header {
-      width: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      text-align: center;
-      padding: 15px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #ffffff;
-    }
-
-    /* Container for video */
-    #container {
-      position: relative;
-      width: 90%;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    /* Video styling */
-    .plyr {
-      width: 100%;
-      height: auto;
-    }
-
-    /* Advertisement Section */
-    .advertisement {
-      background-color: rgba(255, 255, 255, 0.2);
-      color: #fff;
-      text-align: center;
-      padding: 10px;
-      font-size: 18px;
-      margin-bottom: 15px;
-    }
-
-    /* Loading animation */
-    .loading-spinner {
-      border: 8px solid rgba(255, 255, 255, 0.3);
-      border-top: 8px solid #ffffff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Hide the loading spinner when the video is loaded */
-    .loading-container {
-      position: relative;
-      width: 100%;
-      display: none;
-    }
-
-    /* Mobile responsiveness */
-    @media only screen and (max-width: 768px) {
-      #container {
-        width: 100%;
-      }
-
-      header {
-        font-size: 18px;
-      }
-    }
-
-    /* Bubble background animation */
-    .bubble-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      overflow: hidden;
-      background-color: #1e3a8a;
-    }
-
-    .bubble {
-      position: absolute;
-      bottom: -100px;
-      width: 40px;
-      height: 40px;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      animation: bubble-animation 15s infinite ease-in;
-      opacity: 0.8;
-    }
-
-    /* Randomized sizes and animation speeds */
-    .bubble:nth-child(2) {
-      width: 60px;
-      height: 60px;
-      left: 20%;
-      animation-duration: 18s;
-    }
-
-    .bubble:nth-child(3) {
-      width: 30px;
-      height: 30px;
-      left: 40%;
-      animation-duration: 12s;
-    }
-
-    .bubble:nth-child(4) {
-      width: 50px;
-      height: 50px;
-      left: 60%;
-      animation-duration: 20s;
-    }
-
-    .bubble:nth-child(5) {
-      width: 70px;
-      height: 70px;
-      left: 80%;
-      animation-duration: 22s;
-    }
-
-    /* Animation for bubbles */
-    @keyframes bubble-animation {
-      0% {
-        transform: translateY(0);
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(-110vh);
-        opacity: 0;
-      }
-    }
-  </style>
+    <meta charset="utf-8" />
+    <title>Mahagedara.co Player</title>
+    <meta name="description" property="og:description" content="A simple HTML5 media player with custom controls and WebVTT captions." />
+    <meta name="author" content="Sam Potts" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="https://cdn.plyr.io/static/icons/favicon.ico" />
+    <link rel="stylesheet" href="../cdn.plyr.io/3.7.8/demo.css" />
+    <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/gordita-medium.woff2" />
+    <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/gordita-bold.woff2" />
+    <style>
+        body {
+            overflow: hidden;
+            position: relative;
+            background: #f0f0f0;
+        }
+        /* Bubble animation */
+        .bubble {
+            position: absolute;
+            bottom: -150px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: rise 10s infinite;
+            opacity: 0.7;
+            filter: blur(8px);
+        }
+        @keyframes rise {
+            0% {
+                transform: translateX(0) translateY(0);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateX(30px) translateY(-600px);
+                opacity: 0;
+            }
+        }
+        #container {
+            position: relative;
+            overflow: hidden;
+        }
+        .loading-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* Initially hidden */
+        }
+        .loading-spinner {
+            border: 8px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 8px solid #007bff;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132699580-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-132699580-1');
+    </script>
 </head>
+
 <body>
+    <div class="bubble"></div>
+    <div class="bubble" style="left: 20%; animation-duration: 8s;"></div>
+    <div class="bubble" style="left: 40%; animation-duration: 9s;"></div>
+    <div class="bubble" style="left: 60%; animation-duration: 7s;"></div>
+    <div class="bubble" style="left: 80%; animation-duration: 6s;"></div>
 
-<!-- Bubble Background Animation -->
-<div class="bubble-background">
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-  <div class="bubble"></div>
-</div>
+    <div class="grid">
+        <header>
+            <h1>Pl<span>a</span>y<span>e</span>r</h1>
+            <p>Mahagedara.co online video player</p>
+            <div class="call-to-action">
+                <a id="downloadBtn" href="#" target="_blank" class="button js-shr">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-arrow-down-fill" viewBox="0 0 16 16">
+                        <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708" />
+                    </svg>
+                    Download Video
+                </a>
+            </div>
+        </header>
+        <main>
+            <div class="loading-container" id="loadingContainer">
+                <div class="loading-spinner"></div>
+            </div>
 
-<!-- Header Section -->
-<header>DrivePlyr - Google Drive Video Player</header>
+            <div id="container">
+                <video controls poster="https://bit.ly/bbsampleposter" id="vid1">
+                    <source src="" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div id="pagination" style="display: none;"></div> <!-- Hidden by default -->
+        </main>
+    </div>
+    <aside>
+        <p>
+            Visit Now
+            <a href="https://tmahagedara.co" target="_blank" class="link js-shr">Mahagedara</a>
+        </p>
+    </aside>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.6.7/plyr.min.js"></script>
 
-<!-- Advertisement Section -->
-<div class="advertisement">
-  Your Ad Here - Advertisement Section
-</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var apiKeyList = [
+                'AIzaSyCt3DULzE2trDJhfFUosWZT-3GEObbMqVU',
+                'AIzaSyCsbx8BSyLwkw6XX6Lg5OF1U0HNtI9VmCY',
+                'AIzaSyBLMJAT6oqTZxAMsCsMjXzoo4lkJL4MmfM',
+                'AIzaSyCIY6fomcJxOt0XQ_naa1rzfd5wlOMGKDY'
+            ];
 
-<!-- Loading Spinner -->
-<div class="loading-container" id="loadingContainer">
-  <div class="loading-spinner"></div>
-</div>
+            var apiKey = apiKeyList[Math.floor(Math.random() * apiKeyList.length)];
 
-<!-- Container for video -->
-<div id="container">
-  <video controls poster="https://bit.ly/bbsampleposter" id="vid1">
-    <!-- Video file source (placeholder) -->
-    <source src="" type="video/mp4" />
-  </video>
-</div>
+            function getParam(param, url = window.location.href) {
+                param = param.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + param + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
 
-<!-- Plyr JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.6.7/plyr.min.js"></script>
+            let video = document.getElementById('vid1');
+            let videoId = getParam('id');
+            let loadingContainer = document.getElementById('loadingContainer');
+            let downloadBtn = document.getElementById('downloadBtn');
 
-<script>
-  var apiKeyList = [
-    'AIzaSyCt3DULzE2trDJhfFUosWZT-3GEObbMqVU', 
-    'AIzaSyCsbx8BSyLwkw6XX6Lg5OF1U0HNtI9VmCY', 
-    'AIzaSyBLMJAT6oqTZxAMsCsMjXzoo4lkJL4MmfM', 
-    'AIzaSyCIY6fomcJxOt0XQ_naa1rzfd5wlOMGKDY'
-  ];
-  
-  var apiKey = apiKeyList[Math.floor(Math.random() * apiKeyList.length)];
+            if (videoId) {
+                loadingContainer.style.display = 'block';
 
-  function getParam(param, url = window.location.href) {
-    param = param.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + param + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-  }
+                video.src = `https://www.googleapis.com/drive/v3/files/${videoId}?alt=media&key=${apiKey}`;
+                video.poster = `https://lh3.googleusercontent.com/d/${videoId}`;
+                downloadBtn.href = `https://drive.google.com/uc?id=${videoId}&export=download`;
 
-  let video = document.getElementById('vid1');
-  let videoId = getParam('id');
+                video.onloadeddata = function () {
+                    loadingContainer.style.display = 'none';
+                };
 
-  let loadingContainer = document.getElementById('loadingContainer');
+                video.onerror = function () {
+                    loadingContainer.style.display = 'none';
+                    alert('Failed to load video. Please check the video ID.');
+                };
+            } else {
+                alert('No video ID provided.');
+            }
 
-  if (videoId) {
-    // Show loading animation
-    loadingContainer.style.display = 'block';
+            // Pagination Functionality
+            function generatePagination(currentPage, totalPages) {
+                const paginationContainer = document.getElementById('pagination');
+                paginationContainer.innerHTML = '';
 
-    video.src = `https://www.googleapis.com/drive/v3/files/${videoId}?alt=media&key=${apiKey}`;
-    video.poster = `https://lh3.googleusercontent.com/d/${videoId}`;
+                const paginationLimit = 5;
+                const startPage = Math.max(1, Math.min(currentPage - 2, totalPages - paginationLimit + 1));
+                const endPage = Math.min(totalPages, startPage + paginationLimit - 1);
 
-    // Hide loading animation once video is ready
-    video.oncanplay = function() {
-      loadingContainer.style.display = 'none';
-    };
-  } else {
-    console.error('No video ID provided in URL.');
-  }
+                for (let i = startPage; i <= endPage; i++) {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = `#page=${i}`;
+                    a.innerText = i;
+                    li.appendChild(a);
+                    paginationContainer.appendChild(li);
+                }
+            }
 
-  const player = new Plyr('#vid1', {
-    controls: [
-      'play-large', 'play', 'fast-forward', 'progress', 'current-time', 
-      'duration', 'mute', 'volume', 'fullscreen'
-    ]
-  });
-</script>
+            // Initialize pagination
+            generatePagination(3, 10); // Example with page 3 and total 10 pages
 
+            // Initialize Plyr
+            const player = new Plyr('#vid1', {
+                controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+                autoplay: true
+            });
+        });
+    </script>
 </body>
+
 </html>
